@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wd-opsweb-app
+  namespace: nlb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wd-opsweb-backend
+  template:
+    metadata:
+      labels:
+        app: wd-opsweb-backend
+    spec:
+      containers:
+        - name: wd-opsweb-ms-uit
+          image: 070254166013.dkr.ecr.us-east-1.amazonaws.com/wddashboardapp:1.3.6
+          imagePullPolicy: Always
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "awsuit"
+          ports:
+            - name: tcp
+              containerPort: 9055
